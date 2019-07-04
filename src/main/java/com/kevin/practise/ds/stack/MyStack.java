@@ -18,19 +18,19 @@ public class MyStack<E> implements IStack<E> {
     }
 
     @Override
-    public void push(E element) {
+    public synchronized void push(E element) {
         Node node = new Node(element, top);
         top = node;
         size++;
     }
 
     @Override
-    public int size() {
+    public synchronized int size() {
         return size;
     }
 
     @Override
-    public E pop() {
+    public synchronized E pop() {
         if (top == null) {
             return null;
         }
@@ -41,7 +41,7 @@ public class MyStack<E> implements IStack<E> {
     }
 
     @Override
-    public E peek() {
+    public synchronized E peek() {
         if (top == null) {
             return null;
         }
@@ -49,7 +49,7 @@ public class MyStack<E> implements IStack<E> {
     }
 
     @Override
-    public boolean isEmpty() {
+    public synchronized boolean isEmpty() {
         return size == 0;
     }
 }

@@ -1,7 +1,11 @@
 package com.kevin.practise.ds.stack;
 
+import com.kevin.practise.utils.ThreadHelper;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class MyStackTest {
     @Test
@@ -154,5 +158,57 @@ public class MyStackTest {
 
         //then
         Assert.assertArrayEquals(expect, act);
+    }
+
+    @Test
+    public void should_stack_increase_when_threads_push_into_given_stack() {
+        //given
+        IStack<Integer> stack = new MyStack<>();
+
+        //when
+        final int THREAD_COUNT = 5;
+        final int MILLION_TIMES = 1_000_000;
+        PushThread[] threads = new PushThread[THREAD_COUNT];
+        for (int i = 0; i < THREAD_COUNT; i++) {
+            final int offset = i;
+            threads[i] = new PushThread(stack, MILLION_TIMES, new Function<Integer, Integer>() {
+                @Override
+                public Integer apply(Integer index) {
+                    return offset * THREAD_COUNT + index;
+                }
+            });
+        }
+        ThreadHelper.executeAndWaitComplete(threads);
+
+        //then
+        Assert.assertEquals(THREAD_COUNT * MILLION_TIMES, stack.size());
+    }
+
+    @Test
+    public void should_stack_decrease_when_threads_pop_from_given_stack() {
+        //given
+        IStack<Integer> stack = new MyStack<>();
+        final int THREAD_COUNT = 5;
+        final int MILLION_TIMES = 1_000_000;
+        for (int i = 0; i < THREAD_COUNT; i++) {
+            for (int j = 0; j < MILLION_TIMES; j++) {
+                stack.push(i * MILLION_TIMES + j);
+            }
+        }
+
+        //when
+        PopThread[] threads = new PopThread[THREAD_COUNT];
+        for (int i = 0; i < THREAD_COUNT; i++) {
+            threads[i] = new PopThread(stack, MILLION_TIMES, new Consumer<Integer>() {
+                @Override
+                public void accept(Integer o) {
+
+                }
+            });
+        }
+        ThreadHelper.executeAndWaitComplete(threads);
+
+        //then
+        Assert.assertEquals(0, stack.size());
     }
 }
