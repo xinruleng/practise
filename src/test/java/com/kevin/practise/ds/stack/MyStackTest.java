@@ -1,11 +1,12 @@
 package com.kevin.practise.ds.stack;
 
 import com.kevin.practise.utils.ThreadHelper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MyStackTest {
     @Test
@@ -17,7 +18,7 @@ public class MyStackTest {
         stack.push(1);
 
         //then
-        Assert.assertEquals(1, stack.size());
+        assertEquals(1, stack.size());
 
     }
 
@@ -33,8 +34,8 @@ public class MyStackTest {
         Integer output = stack.pop();
 
         //then
-        Assert.assertEquals(0, stack.size());
-        Assert.assertEquals(input, output);
+        assertEquals(0, stack.size());
+        assertEquals(input, output);
     }
 
     @Test
@@ -49,8 +50,8 @@ public class MyStackTest {
         Integer output = stack.peek();
 
         //then
-        Assert.assertEquals(1, stack.size());
-        Assert.assertEquals(input, output);
+        assertEquals(1, stack.size());
+        assertEquals(input, output);
     }
 
     @Test
@@ -61,7 +62,7 @@ public class MyStackTest {
         //when
 
         //then
-        Assert.assertTrue(stack.isEmpty());
+        assertTrue(stack.isEmpty());
     }
 
     @Test
@@ -73,7 +74,7 @@ public class MyStackTest {
         stack.push(1);
 
         //then
-        Assert.assertFalse(stack.isEmpty());
+        assertFalse(stack.isEmpty());
     }
 
     @Test
@@ -86,7 +87,7 @@ public class MyStackTest {
         stack.pop();
 
         //then
-        Assert.assertTrue(stack.isEmpty());
+        assertTrue(stack.isEmpty());
     }
 
     @Test
@@ -99,7 +100,7 @@ public class MyStackTest {
         stack.peek();
 
         //then
-        Assert.assertFalse(stack.isEmpty());
+        assertFalse(stack.isEmpty());
     }
 
     @Test
@@ -111,7 +112,7 @@ public class MyStackTest {
         stack.push(null);
 
         //then
-        Assert.assertEquals(1, stack.size());
+        assertEquals(1, stack.size());
     }
 
     @Test
@@ -123,7 +124,7 @@ public class MyStackTest {
         Integer output = stack.pop();
 
         //then
-        Assert.assertNull(output);
+        assertNull(output);
     }
 
     @Test
@@ -135,7 +136,7 @@ public class MyStackTest {
         Integer output = stack.peek();
 
         //then
-        Assert.assertNull(output);
+        assertNull(output);
     }
 
     @Test
@@ -157,7 +158,7 @@ public class MyStackTest {
         }
 
         //then
-        Assert.assertArrayEquals(expect, act);
+        assertArrayEquals(expect, act);
     }
 
     @Test
@@ -181,7 +182,7 @@ public class MyStackTest {
         ThreadHelper.executeAndWaitComplete(threads);
 
         //then
-        Assert.assertEquals(THREAD_COUNT * MILLION_TIMES, stack.size());
+        assertEquals(THREAD_COUNT * MILLION_TIMES, stack.size());
     }
 
     @Test
@@ -209,6 +210,6 @@ public class MyStackTest {
         ThreadHelper.executeAndWaitComplete(threads);
 
         //then
-        Assert.assertEquals(0, stack.size());
+        assertEquals(0, stack.size());
     }
 }
